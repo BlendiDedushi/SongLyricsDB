@@ -1,21 +1,27 @@
 export default function Header() {
   return `
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="index.html">SongLyricsDB</a>
+      <a class="navbar-brand text-light" href="index.html">SongLyricsDB</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <i class="bi bi-list"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           <li class="nav-item me-3">
-            <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            <a class="nav-link text-light" aria-current="page" href="index.html">Songs</a>
           </li>
           <li class="nav-item me-3">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link text-light" href="about.html">About</a>
           </li>
           <li class="nav-item me-3">
-            <a class="nav-link" href="playlist.html">PlayList</a>
+            <a class="nav-link text-light" href="playlist.html">Playlist</a>
+          </li>
+          <li class="nav-item me-3">
+            <a class="nav-link text-light" href="#">Artists</a>
+          </li>
+          <li class="nav-item me-3">
+            <a class="nav-link text-light" href="#">Albums</a>
           </li>
         </ul>
         <div id="searchbtn" class="d-none">
@@ -23,7 +29,7 @@ export default function Header() {
                 <input class="form-control" type="search" placeholder="Search the song..." aria-label="Search">
             </form>
         </div>
-        <button class="btn btn-outline-success  mt-1 mb-1" id="search-btn"><i class="bi bi-search"></i></button>
+        <button class="btn btn-outline-light  mt-1 mb-1" id="search-btn"><i class="bi bi-search"></i></button>
       </div>
     </div>
   </nav>
