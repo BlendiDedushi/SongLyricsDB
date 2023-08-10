@@ -12,16 +12,13 @@ export default function Header() {
             <a class="nav-link text-light" aria-current="page" href="index.html">Songs</a>
           </li>
           <li class="nav-item me-3">
-            <a class="nav-link text-light" href="about.html">About</a>
-          </li>
+            <a class="nav-link text-light" href="artist.html">Artists</a>
+            </li>
+            <li class="nav-item me-3">
+              <a class="nav-link text-light" href="album.html">Albums</a>
+            </li>
           <li class="nav-item me-3">
             <a class="nav-link text-light" href="playlist.html">Playlist</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link text-light" href="#">Artists</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link text-light" href="#">Albums</a>
           </li>
         </ul>
         <div id="searchbtn" class="d-none">
