@@ -36,23 +36,20 @@
             </button>
         </div>
     </section>
+    <footer></footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     <script src="./node_modules/axios/dist/axios.min.js"></script>
     <script type="module">
         import Header from './components/Header.js'
+        import Footer from './components/Footer.js'
         import Albums from './components/Albums.js'
         import config from './assets/js/config.js';
     
         let current_page = 1;
     
         document.querySelector('header').innerHTML = Header()
-    
-        document.querySelector('#search-btn').addEventListener('click', (e) => {
-            e.preventDefault()
-            document.querySelector('#searchbtn').classList.toggle('d-none')
-        })
     
         const fetchAlbums = async (page) => {
             const options = {
@@ -93,6 +90,8 @@
     
             fetchAlbums(current_page);
         }));
+
+        document.querySelector('footer').innerHTML = Footer()
     </script>
 </body>
 

@@ -16,7 +16,7 @@ export default function Songs(songs){
                         </div>
                     </div>
                     <div class="col-md-1 my-auto">
-                        <a href="#" class="ms-3 btn btn-outline-dark"><i class="bi bi-caret-right"></i></a>
+                        <a href="song.html?id=${song.item.id}" class="ms-3 btn btn-outline-dark"><i class="bi bi-caret-right"></i></a>
                     </div>
                 </div>
             </div>

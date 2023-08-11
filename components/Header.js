@@ -1,4 +1,5 @@
 export default function Header() {
+  const current_page = window.location.pathname
   return `
     <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
@@ -21,14 +22,19 @@ export default function Header() {
             <a class="nav-link text-light" href="playlist.html">Playlist</a>
           </li>
         </ul>
-        <div id="searchbtn" class="d-none">
-            <form class="container-fluid" role="search" >
-                <input class="form-control" type="search" placeholder="Search the song..." aria-label="Search">
-            </form>
-        </div>
-        <button class="btn btn-outline-light  mt-1 mb-1" id="search-btn"><i class="bi bi-search"></i></button>
+        ${
+          (current_page === '/index.html') ? 
+          `
+            <div id="searchbtn" class="d-none">
+              <form class="container-fluid" role="search" >
+                  <input class="form-control" type="search" placeholder="Search the song..." aria-label="Search">
+              </form>
+            </div>
+            <button class="btn btn-outline-light  mt-1 mb-1" id="search-btn"><i class="bi bi-search"></i></button>` : '' 
+          
+        }
       </div>
     </div>
   </nav>
-    `;
+    `
 }
