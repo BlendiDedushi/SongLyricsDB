@@ -1,7 +1,8 @@
 export default function Songs(songs){
+    const current_page = window.location.pathname
     let songs_html= `<div class="row">`
     
-    songs.forEach(song =>{
+    songs.forEach((song, index) =>{
         songs_html += `
         <div class="card border-dark-subtle mb-4 container-fluid chover bg-body-tertiary">
                 <div class="row">
@@ -16,6 +17,12 @@ export default function Songs(songs){
                         </div>
                     </div>
                     <div class="col-md-1 my-auto">
+                    ${
+                        (current_page === '/playlist.html') ? `<i data-song-index="${index}" id="removeFromPlaylist" class="bi bi-trash ms-3 mb-3 btn btn-outline-danger"></i>`:
+                        
+                        `<i data-song-index="${index}" id="addToPlaylist" class="bi bi-suit-heart ms-3 mb-3 btn btn-outline-danger"></i>`
+                    }
+                        
                         <a href="song.html?id=${song.item.id}" class="ms-3 btn btn-outline-dark"><i class="bi bi-caret-right"></i></a>
                     </div>
                 </div>

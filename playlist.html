@@ -1,19 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayList | SongLyricsDB</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Songs | SongLyricsDB</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <header></header>
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    
+    <section id="songs" class="py-3 my-5">
+        <div class="container">
+        </div>
+    </section>
+    <footer class="fixed-bottom"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script src="./assets/js/dynamicListener.min.js"></script>
+
     <script type="module">
         import Header from './components/Header.js'
-        document.querySelector('header').innerHTML = Header() 
-    </script></body>
+        import Footer from './components/Footer.js'
+        import Songs from './components/Songs.js'
+
+        document.querySelector('header').innerHTML = Header()
+
+        const playlist = JSON.parse(localStorage.getItem('playlist')) || [];
+
+        if (playlist === null || playlist.length === 0) {
+            document.querySelector('#songs > div').innerHTML = '<h1>Playlist is empty!</h1>';
+        } else {
+            document.querySelector('#songs > div').innerHTML = Songs(playlist);
+        }
+
+
+        addDynamicEventListener(document.body, 'click', '#removeFromPlaylist', e => {
+            const clickedSongIndex = parseInt(e.target.getAttribute('data-song-index'));
+            const playlist = JSON.parse(localStorage.getItem('playlist')) || [];
+
+            const updatedPlaylist = playlist.filter(item => item.item.id !== playlist[clickedSongIndex].item.id);
+            localStorage.setItem('playlist', JSON.stringify(updatedPlaylist));
+
+            document.querySelector('#songs > div').innerHTML = Songs(updatedPlaylist, playlist);
+        });
+
+
+
+        document.querySelector('footer').innerHTML = Footer()
+    </script>
+</body>
+
 </html>
