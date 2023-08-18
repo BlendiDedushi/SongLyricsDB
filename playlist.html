@@ -13,6 +13,10 @@
 
 <body>
     <header></header>
+    <div class="d-flex justify-content-around mt-3">
+        <button id="sortButtonArtist" class="btn btn-outline-dark"></button>
+        <button id="sortButtonTitle" class="btn btn-outline-dark "></button>
+    </div>
     <section id="songs" class="py-3 my-5">
         <div class="container">
         </div>
@@ -50,6 +54,52 @@
             document.querySelector('#songs > div').innerHTML = Songs(updatedPlaylist, playlist);
         });
 
+        let ascendingOrderArtist = true;
+        let ascendingOrderTitle = true;
+
+        const toggleSortingArtist = () => {
+            ascendingOrderArtist = !ascendingOrderArtist;
+            playlist.sort((a, b) => {
+                const artistA = a.item.artist_names.toLowerCase();
+                const artistB = b.item.artist_names.toLowerCase();
+                const comparison = artistA.localeCompare(artistB);
+                return ascendingOrderArtist ? comparison : -comparison;
+            });
+        };
+
+        const toggleSortingTitle = () => {
+            ascendingOrderTitle = !ascendingOrderTitle;
+            playlist.sort((a, b) => {
+                const titleA = a.item.full_title.toLowerCase();
+                const titleB = b.item.full_title.toLowerCase();
+                const comparison = titleA.localeCompare(titleB);
+                return ascendingOrderTitle ? comparison : -comparison;
+            });
+        };
+
+        document.querySelector('#sortButtonArtist').addEventListener('click', () => {
+            toggleSortingArtist();
+            document.querySelector('#songs > div').innerHTML = Songs(playlist);
+            const buttonText = ascendingOrderArtist ? 'Artist (asc)' : 'Artist (desc)';
+            document.querySelector('#sortButtonArtist').textContent = buttonText;
+            document.querySelector('#sortButtonTitle').textContent = 'Sort by Title';
+            ascendingOrderTitle = true;
+        });
+
+        document.querySelector('#sortButtonTitle').addEventListener('click', () => {
+            toggleSortingTitle();
+            document.querySelector('#songs > div').innerHTML = Songs(playlist);
+            const buttonText = ascendingOrderTitle ? 'Title (asc)' : 'Title (desc)';
+            document.querySelector('#sortButtonTitle').textContent = buttonText;
+            document.querySelector('#sortButtonArtist').textContent = 'Sort by Artist';
+            ascendingOrderArtist = true;
+        });
+
+        const initialButtonTextArtist = 'Sort by Artist';
+        document.querySelector('#sortButtonArtist').textContent = initialButtonTextArtist;
+
+        const initialButtonTextTitle = 'Sort by Title';
+        document.querySelector('#sortButtonTitle').textContent = initialButtonTextTitle;
 
 
         document.querySelector('footer').innerHTML = Footer()
