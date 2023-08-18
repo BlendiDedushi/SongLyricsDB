@@ -16,25 +16,6 @@
     <section id="songs" class="py-4">
         <h2 class="container text-center mb-5"><i class="bi bi-bar-chart"></i>Song-Chart</h2>
         <div class="container">
-            <!-- <div class="card border-dark-subtle mb-4 container-fluid chover bg-body-tertiary">
-                <div class="row">
-                    <div class="col-md-2">
-                        <img src="https://images.genius.com/058e2359838c93395c36119b48a2eff6.300x300x1.png"
-                            class="img-thumbnail mt-1" style="max-width: 150px;" alt="...">
-                    </div>
-                    <div class="col-md-9">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="bi bi-music-note"></i> Rap God by Eminem</h5>
-                            <p class="card-text text-decoration-underline">Eminem</p>
-                            <p class="card-text mt-5"><small class="text-body-secondary"><i class="bi bi-calendar3"></i>
-                                    October 14, 2013 </small></p>
-                        </div>
-                    </div>
-                    <div class="col-md-1 my-auto">
-                        <a href="#" class="ms-3 btn btn-outline-dark"><i class="bi bi-caret-right"></i></a>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </section>
     <section id="pagination" class="py-4">
@@ -53,83 +34,12 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     <script src="./node_modules/axios/dist/axios.min.js"></script>
-    <!-- <script type="module">
-        import Header from './components/Header.js'
-        import Songs from './components/Songs.js'
-        import config from './assets/js/config.js';
 
-        let current_page=1;
-
-        document.querySelector('header').innerHTML = Header()
-
-        document.querySelector('#search-btn').addEventListener('click', (e) => {
-            e.preventDefault()
-            document.querySelector('#searchbtn').classList.toggle('d-none')
-        })
-
-        
-        const options = {
-            method: 'GET',
-            url: 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/',
-            params: {
-                per_page: '15',
-                page: '1'
-            },
-            headers: {
-                'X-RapidAPI-Key': config.rapidAPIKey,
-                'X-RapidAPI-Host': config.rapidAPIHost
-            }
-        };
-
-        try {
-            const songs = await axios.request(options);
-            document.querySelector('#songs > div').innerHTML = Songs(songs.data.chart_items)
-            document.querySelector('#pagination span.current-page').innerHTML = options.params.page
-        } catch (error) {
-            console.error(error);
-        }
-        
-
-            document.querySelectorAll('#pagination .btn').forEach(btn => btn.addEventListener('click', e=>{
-            e.preventDefault()
-            
-            switch(e.target.getAttribute('id')){
-                case 'prev':
-                    if(current_page > 1) current_page--;
-                    break
-                case 'next':
-                    if(current_page !== 20) current_page++;
-                    break
-            }
-            console.log(current_page)
-            const options = {
-            method: 'GET',
-            url: 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/',
-            params: {
-                per_page: '15',
-                page: '${current_page}'
-            },
-            headers: {
-                'X-RapidAPI-Key': config.rapidAPIKey,
-                'X-RapidAPI-Host': config.rapidAPIHost
-            }
-            };
-
-            try {
-                const songs = await axios.request(options);
-                document.querySelector('#songs > div').innerHTML = Songs(songs.data.chart_items)
-                document.querySelector('#pagination span.current-page').innerHTML = options.params.page
-            } catch (error) {
-                console.error(error);
-            }
-
-        }))
-
-    </script> -->
     <script type="module">
         import Header from './components/Header.js'
         import Footer from './components/Footer.js'
         import Songs from './components/Songs.js'
+        import SearchedSongs from './components/SearchedSongs.js'
         import config from './assets/js/config.js';
 
         let current_page = 1;
@@ -163,7 +73,6 @@
                 console.error(error);
             }
         };
-
         fetchSongs(current_page);
 
         document.querySelectorAll('#pagination .btn').forEach(btn => btn.addEventListener('click', (e) => {
@@ -177,44 +86,40 @@
                     if (current_page !== 20) current_page++;
                     break;
             }
-
             fetchSongs(current_page);
         }));
 
-        // const search_input = document.querySelector('#searchbtn input')
+        const search_input = document.querySelector('#searchbtn input');
+        if (search_input !== null) {
+            search_input.addEventListener('keydown', async e => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
 
-        // if (search_input !== null) {
-        //     search_input.addEventListener('keyup', async e => {
-        //         e.preventDefault()
+                    const options = {
+                        method: 'GET',
+                        url: 'https://genius-song-lyrics1.p.rapidapi.com/search/',
+                        params: { q: e.target.value,
+                                    per_page: '30' },
+                        headers: {
+                            'X-RapidAPI-Key': config.rapidAPIKey,
+                            'X-RapidAPI-Host': config.rapidAPIHost
+                        }
+                    };
 
-        //         switch (e.keyCode) {
-        //             case 13:
-        //                 document.querySelector('#pagination').classList.add('d-none')
-        //                 const options = {
-        //                     method: 'GET',
-        //                     url: 'https://genius-song-lyrics1.p.rapidapi.com/search/',
-        //                     params: {
-        //                         q: e.target.value ,
-        //                         per_page: '10',
-        //                         page: '1'
-        //                     },
-        //                     headers: {
-        //                         'X-RapidAPI-Key': config.rapidAPIKey,
-        //                         'X-RapidAPI-Host': config.rapidAPIHost
-        //                     }
-        //                 };
+                    try {
+                        const response = await axios.request(options);
+                        const searchResults = response.data.hits;
+                        document.querySelector('#songs > div').innerHTML = SearchedSongs(searchResults);
+            
+                    } catch (error) {
+                        console.error(error);
+                    }
 
-        //                 try {
-        //                     const songs = await axios.request(options);
-        //                     document.querySelector('#songs > div').innerHTML = Songs(songs.data.chart_items);
-        //                     document.querySelector('#pagination span.current-page').innerHTML = page;
-        //                 } catch (error) {
-        //                     console.error(error);
-        //                 }
-        //                 break
-        //         }
-        //     })
-        // }
+                    document.querySelector('#pagination').classList.add('d-none');
+                }
+            });
+        }
+
         document.querySelector('footer').innerHTML = Footer()
     </script>
 </body>
